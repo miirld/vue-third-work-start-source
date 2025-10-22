@@ -10,12 +10,21 @@
         />
       </router-link>
     </div>
-
     <form action="#" class="header__search">
-      <input type="search" name="search" required placeholder="Поиск" />
+      <input
+        type="search"
+        name="search"
+        required
+        placeholder="Поиск"
+        @input="
+          filtersStore.applyFilters({
+            item: $event.target.value,
+            entity: 'search',
+          })
+        "
+      />
       <button type="submit">Найти</button>
     </form>
-
     <router-link to="/tasks/create" class="header__create-task"
       >Создать карточку</router-link
     >
@@ -44,6 +53,12 @@
     </div>
   </header>
 </template>
+
+<script setup>
+import { useFiltersStore } from "@/stores";
+
+const filtersStore = useFiltersStore();
+</script>
 
 <style lang="scss" scoped>
 @import "@/assets/scss/ds-system/ds-system";

@@ -1,6 +1,8 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import { clickOutside } from "./common/directives";
+import { getToken, removeToken } from "@/services/token-manager";
+import { useAuthStore } from "@/stores";
 
 import App from "./App.vue";
 import router from "./router";
@@ -12,3 +14,15 @@ app.use(router);
 app.directive("click-outside", clickOutside);
 
 app.mount("#app");
+
+const token = getToken()
+if (token) {
+	try {
+		const authStore = useAuthStore()
+		await authStore.getMe()
+		await router.push('/')
+	} catch (e) {
+		removeToken()
+		console.log(e)
+	}
+}

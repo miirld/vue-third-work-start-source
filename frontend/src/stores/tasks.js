@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { useUsersStore, useFiltersStore } from "@/stores";
+import { useUsersStore, useFiltersStore, useTicksStore } from "@/stores";
 import { tasksService } from "@/services";
 
 export const useTasksStore = defineStore("tasks", {
@@ -47,6 +47,17 @@ export const useTasksStore = defineStore("tasks", {
             !filtersStore.filters[key].length || callback(task),
         );
       });
+    },
+    getTaskById: (state) => (id) => {
+      const ticksStore = useTicksStore();
+      const usersStore = useUsersStore();
+      const task = state.tasks.find((task) => task.id == id);
+      if (!task) return null;
+      // Добавляем подзадачи
+      task.ticks = ticksStore.getTicksByTaskId(task.id);
+      // Добавляем пользователя
+      task.user = usersStore.users.find((user) => user.id === task.userId);
+      return task;
     },
     getTaskUserById: () => (id) => {
       const usersStore = useUsersStore();

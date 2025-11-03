@@ -24,4 +24,9 @@ export default [
     path: "/bouncing-ball",
     component: () => import("./demo6/BouncingBall.vue"),
   },
+  {
+    name: "Bouncing Ball JS",
+    path: "/bouncing-ball-js",
+    component: () => import("./demo6/BouncingBallJS.vue"),
+  },
 ];

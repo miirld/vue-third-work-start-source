@@ -19,4 +19,9 @@ export default [
     path: "/demo-5",
     component: () => import("./demo5/Server.vue"),
   },
+  {
+    name: "Bouncing Ball",
+    path: "/bouncing-ball",
+    component: () => import("./demo6/BouncingBall.vue"),
+  },
 ];
